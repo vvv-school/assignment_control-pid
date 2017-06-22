@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suit name="Test Assignment on Simple Control Design">
+    <description>Testing the assignment on Simple Control Design</description>
+    <environment>--robotname icubSim</environment>
+    <fixture param="--fixture fixture.xml"> yarpmanager </fixture>
+
+    <test type="dll"> TestAssignmentSimpleControlDesign </test>
+</suit>

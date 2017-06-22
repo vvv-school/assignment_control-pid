@@ -1,0 +1,57 @@
+<application>
+    <name>Fixture for Assignment on Simple Control Design</name>
+    <description>A fixture to prepare components required for the assignment</description>
+    <version>1.0</version>
+    <authors>
+        <author email="ugo.pattacini@iit.it">Ugo Pattacini</author>
+    </authors>
+    <module>
+        <name>iCub_SIM</name>
+        <node>testnode</node>
+    </module>
+    <module>
+        <name>assignment_control-pid-detector</name>
+        <prefix>/left</prefix>
+        <dependencies>
+            <port timeout="10">/icubSim/cam/left</port>
+        </dependencies>
+        <node>testnode</node>
+    </module>
+    <module>
+        <name>assignment_control-pid-detector</name>
+        <prefix>/right</prefix>
+        <dependencies>
+            <port timeout="10">/icubSim/cam/right</port>
+        </dependencies>
+        <node>testnode</node>
+    </module>
+    <module>
+        <name>assignment_control-pid-controller</name>
+        <dependencies>
+            <port timeout="10">/icubSim/head/state:o</port>
+            <port timeout="10">/left/detector/target</port>
+            <port timeout="10">/right/detector/target</port>
+        </dependencies>
+        <node>testnode</node>
+    </module>
+    <connection>
+        <from>/icubSim/cam/left</from>
+        <to>/left/detector/image/in</to>
+        <protocol>udp</protocol>
+    </connection>
+    <connection>
+        <from>/icubSim/cam/right</from>
+        <to>/right/detector/image/in</to>
+        <protocol>udp</protocol>
+    </connection>    
+    <connection>
+        <from>/left/detector/target</from>
+        <to>/controller/target/left:i</to>
+        <protocol>tcp</protocol>
+    </connection>
+    <connection>
+        <from>/right/detector/target</from>
+        <to>/controller/target/right:i</to>
+        <protocol>tcp</protocol>
+    </connection>    
+</application>
