@@ -23,7 +23,7 @@ There is a robot standing in a world far away, whose body is fully anchored to t
 
 Given that the robot observes the world through its **320x240** couple of cameras, your task is "simply" to **let the robot look constantly at the floating ball**, as fast as possible, controlling both the eyes and the neck.
 
-Thereby, you have to **tune a bunch of PID controllers** and we will assign you points incrementally as you meet the following requirements in the case of **the jumping ball**:
+Thereby, you have to **tune a bunch of PID controllers** and in turn we will assign you points incrementally, as you meet the following requirements in the case of **the jumping ball**:
 
 1. The _x pixel coordinate_ of the ball in the _left camera image_ will approach the center: **ul ≈ 160**.
 1. The _y pixel coordinate_ of the ball in the _left camera image_ will approach the center: **vl ≈ 120**.
@@ -32,7 +32,7 @@ Thereby, you have to **tune a bunch of PID controllers** and we will assign you 
 1. The robot will try to keep the _tilt of the eyes_ close to 0 degrees: **eyes-tilt ≈ 0**.
 1. The robot will try to keep the _pan of the eyes_ close to 0 degrees: **eyes-pan ≈ 0**.
 
-Additionally, **bonus points** will be assigned in the case of tracking **the moving ball** only if:
+Additionally, **bonus points** will be assigned in the case of tracking **the moving ball**, only if:
 
 1. The _x pixel coordinate_ of the ball in the _left camera image_ will approach the center: **ul ≈ 160**.
 1. The _y pixel coordinate_ of the ball in the _left camera image_ will approach the center: **vl ≈ 120**.
