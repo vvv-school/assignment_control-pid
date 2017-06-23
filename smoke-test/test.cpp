@@ -269,8 +269,11 @@ public:
             assing_points(vl,reached[1],1,score);
             assing_points(ur,reached[2],4,score);
             assing_points(vr,reached[3],1,score);
-            assing_points(tilt,reached[4],2,score);
-            assing_points(pan,reached[5],2,score);
+            
+            if (reached[0]||reached[2])
+                assing_points(tilt,reached[4],2,score);
+            if (reached[1]||reached[3])
+                assing_points(pan,reached[5],2,score);
 
             bool cumul=true;
             for (auto b:reached)
