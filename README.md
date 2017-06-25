@@ -31,8 +31,8 @@ In the case of **the jumping ball**:
 1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**.
 1. The _x pixel coordinate_ of the ball in the _right camera image_ shall approach the center: **ur ≈ 160**.
 1. The _y pixel coordinate_ of the ball in the _right camera image_ shall approach the center: **vr ≈ 120**.
-1. The robot shall keep the _eyes tilt_ close to 0 degrees: **eyes-tilt ≈ 0**.
-1. The robot shall keep the _eyes pan_ close to 0 degrees: **eyes-pan ≈ 0**.
+1. The robot shall keep the _eyes tilt_ close to 0 degrees: **eyes-tilt ≈ 0 [deg]**.
+1. The robot shall keep the _eyes pan_ close to 0 degrees: **eyes-pan ≈ 0 [deg]**.
 
 Additionally, **bonus points** will be assigned in the case of tracking **the moving ball**:
 
