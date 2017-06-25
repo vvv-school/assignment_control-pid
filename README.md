@@ -52,7 +52,7 @@ Thereby, you have to **tune a bunch of PID controllers** and in turn we will ass
 | R2.1 | 8 |
 | R2.2 | 4 |
 
-The maximum score you can achieve is therefore **26**.
+The maximum score you can achieve is therefore **26** :trophy:
 
 ## Expected output
 
