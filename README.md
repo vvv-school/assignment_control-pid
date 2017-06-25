@@ -21,7 +21,7 @@ But stop reading and loafing around now :hammer: and heat up the skills that mad
 # Assignment
 There is a robot standing in a world far away, whose body is fully anchored to the ground. Fortunately, the robot can still gaze around. There is also a magic red ball sticking out from the beautiful landscape. The ball floats insanely in front of the robot, moving along unpredictable trajectories and even teleporting from one place to another.
 
-Given that the robot observes the world through its **320x240** couple of cameras, your task is "simply" to **let the robot look constantly at the floating ball**, as fast as possible, controlling both the eyes and the neck.
+Given that the robot observes the world through its **320x240** couple of cameras, your task is "simply" :laughing: to **let the robot look constantly at the floating ball**, as fast as possible, controlling both the eyes and the neck.
 
 Thereby, you have to **tune a bunch of PID controllers** and in turn we will assign you points incrementally, as you meet the following requirements in the case of **the jumping ball**:
 
