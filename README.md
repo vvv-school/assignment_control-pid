@@ -25,19 +25,34 @@ Given that the robot observes the world through its **320x240** couple of camera
 
 Thereby, you have to **tune a bunch of PID controllers** and in turn we will assign you points incrementally, as you meet the two sets of requirements below.
 
-In the case of **the jumping ball**:
+### R1. The **the jumping ball** case
 
-1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**. Points = **4**.
-1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**. Points = **1**.
-1. The _x pixel coordinate_ of the ball in the _right camera image_ shall approach the center: **ur ≈ 160**. Points = **4**.
-1. The _y pixel coordinate_ of the ball in the _right camera image_ shall approach the center: **vr ≈ 120**. Points = **1**.
-1. The robot shall keep the _eyes tilt_ close to 0 degrees: **eyes-tilt ≈ 0 [deg]**. Points = **2**.
-1. The robot shall keep the _eyes pan_ close to 0 degrees: **eyes-pan ≈ 0 [deg]**. Points = **2**.
+1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**.
+1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**.
+1. The _x pixel coordinate_ of the ball in the _right camera image_ shall approach the center: **ur ≈ 160**.
+1. The _y pixel coordinate_ of the ball in the _right camera image_ shall approach the center: **vr ≈ 120**.
+1. The robot shall keep the _eyes tilt_ close to 0 degrees: **eyes-tilt ≈ 0 [deg]**.
+1. The robot shall keep the _eyes pan_ close to 0 degrees: **eyes-pan ≈ 0 [deg]**.
 
-Additionally, **bonus points** will be assigned in the case of tracking **the moving ball**:
+### R2. The **the moving ball** case
 
-1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**. Points = **8**.
-1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**. Points = **4**.
+1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**.
+1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**.
+
+### Table of points
+
+| Requirements | Points |
+|:---:|:---:|
+| R1.1 | 4 |
+| R1.2 | 1 |
+| R1.3 | 4 |
+| R1.4 | 1 |
+| R1.5 | 2 |
+| R1.6 | 2 |
+| R2.1 | 8 |
+| R2.2 | 4 |
+
+The maximum score you can achieve is therefore **26**.
 
 ## Expected output
 
