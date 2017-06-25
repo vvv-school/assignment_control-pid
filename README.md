@@ -10,7 +10,7 @@ If that's not the case yet, here's below an _eclectic incomplete not-at-all cura
 - [How should I tune my copter?](https://github.com/betaflight/betaflight/wiki/PID-Tuning-Guide)
 - [The good SE resource](https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops)
 - [PID controller tuning in Simulink](https://it.mathworks.com/help/slcontrol/gs/automated-tuning-of-simulink-pid-controller-block.html)
-- [Take on some preparatory control challenges](https://janismac.github.io/ControlChallenges)
+- [Did you already take on these awesome control challenges?](https://janismac.github.io/ControlChallenges)
 
 Some academic resources (take them more seriously):
 - [PID control system analysis, design, and technology](https://doi.org/10.1109/TCST.2005.847331)
