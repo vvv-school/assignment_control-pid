@@ -25,7 +25,7 @@ Given that the robot observes the world through its **320x240** couple of camera
 
 Thereby, you have to **tune a bunch of PID controllers** and in turn we will assign you points incrementally, as you meet the two sets of requirements below.
 
-### R1. The **the jumping ball** case
+#### R1. The jumping ball case
 
 1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**.
 1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**.
@@ -34,12 +34,12 @@ Thereby, you have to **tune a bunch of PID controllers** and in turn we will ass
 1. The robot shall keep the _eyes tilt_ close to 0 degrees: **eyes-tilt ≈ 0 [deg]**.
 1. The robot shall keep the _eyes pan_ close to 0 degrees: **eyes-pan ≈ 0 [deg]**.
 
-### R2. The **the moving ball** case
+#### R2. The moving ball case
 
 1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**.
 1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**.
 
-### Table of points
+#### Table of points
 
 | Requirements | Points |
 |:---:|:---:|
