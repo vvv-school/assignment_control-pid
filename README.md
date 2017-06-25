@@ -12,7 +12,7 @@ If that's not the case yet, here's below an _eclectic incomplete not-at-all cura
 - [PID controller tuning in Simulink](https://it.mathworks.com/help/slcontrol/gs/automated-tuning-of-simulink-pid-controller-block.html)
 - [Take on some preparatory control challenges](https://janismac.github.io/ControlChallenges)
 
-Some academic resources (take it more seriously):
+Some academic resources (take them more seriously):
 - [PID control system analysis, design, and technology](https://doi.org/10.1109/TCST.2005.847331)
 - [The Bible of the PID](https://aiecp.files.wordpress.com/2012/07/1-0-1-k-j-astrom-pid-controllers-theory-design-and-tuning-2ed.pdf)
 
