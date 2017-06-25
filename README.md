@@ -39,7 +39,7 @@ Thereby, you have to **tune a bunch of PID controllers** and in turn we will ass
 1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**.
 1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**.
 
-#### Table of points
+#### Score map
 
 | Requirements | Points |
 |:---:|:---:|
