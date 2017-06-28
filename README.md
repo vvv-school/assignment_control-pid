@@ -23,7 +23,7 @@ There is a robot standing in a world far away, whose body is fully anchored to t
 
 Given that the robot observes the world through its **320x240** couple of cameras, your task is "simply" :laughing: to **let the robot look constantly at the floating ball**, as fast as possible, controlling both the eyes and the neck.
 
-Thereby, you have to **tune a bunch of PID controllers** and in turn we will assign you points incrementally, as you meet the two sets of requirements below.
+Thereby, you have to **tune a bunch of PID velocity controllers** that will drive the joint motors and in turn we will assign you points incrementally, as you meet the two sets of requirements below.
 
 #### R1. Requirements to satisfy when the ball jumps between locations
 
