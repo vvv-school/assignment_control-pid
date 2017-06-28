@@ -45,7 +45,7 @@ public:
     }
     
     // compute the control command
-    double command(const double r, const double f)
+    double command(const double reference, const double feedback)
     {
         // FILL IN THE CODE
         return 0.0;
