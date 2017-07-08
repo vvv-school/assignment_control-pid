@@ -32,18 +32,18 @@ using namespace iCub::ctrl;
 
 /**********************************************************************/
 class Statistics
-{    
+{
     deque<double> buf;
     string name;
     unsigned int N;
     double M,T,S;
-    
+
 public:
     /******************************************************************/
     Statistics(const string &name_, const unsigned int N_,
                const double M_, const double T_, const double S_) :
                name(name_), N(N_), M(M_), T(T_), S(S_) { }
-        
+
     /******************************************************************/
     string getName() const { return name; }
 
@@ -57,7 +57,7 @@ public:
         if (buf.size()>N)
             buf.pop_front();
     }
-    
+
     /******************************************************************/
     bool reached() const
     {
@@ -65,7 +65,7 @@ public:
         {
             double mean=0.0;
             double stdev=0.0;
-            
+
             for (auto d:buf)
             {
                 mean+=d;
@@ -86,13 +86,13 @@ class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
 {
     PolyDriver driver;
     IEncoders *ienc;
-    
+
     BufferedPort<Bottle> portL;
     BufferedPort<Bottle> portR;
     RpcClient portBall;
-    
+
     Integrator I;
-    
+
     /******************************************************************/
     bool createBall(const Vector& pos)
     {
@@ -116,7 +116,7 @@ class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
         else
             return false;
     }
-    
+
     /******************************************************************/
     bool setBall(const Vector& pos)
     {
@@ -137,9 +137,9 @@ class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
         else
             return false;
     }
-    
+
     /******************************************************************/
-    void assing_points(const Statistics &s, bool &reached,
+    void assign_points(const Statistics &s, bool &reached,
                        const unsigned int points, unsigned int &score)
     {
         if (s.reached() && !reached)
@@ -150,7 +150,7 @@ class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
             reached=true;
         }
     }
-    
+
 public:
     /******************************************************************/
     TestAssignmentSimpleControlDesign() :
@@ -165,18 +165,18 @@ public:
     }
 
     /******************************************************************/
-    virtual bool setup(yarp::os::Property& property)
+    bool setup(yarp::os::Property& property) override
     {
         float rpcTmo=(float)property.check("rpc-timeout",Value(10.0)).asDouble();
-        
+
         Property option;
         option.put("device","remote_controlboard");
         option.put("remote","/icubSim/head");
         option.put("local","/"+getName());
-        
+
         RTF_ASSERT_ERROR_IF(driver.open(option),"Unable to connect to icubSim");
         driver.view(ienc);
-        
+
         portL.open("/"+getName()+"/target/left:i");
         RTF_ASSERT_ERROR_IF(Network::connect("/left/detector/target",
                                              portL.getName()),
@@ -190,7 +190,7 @@ public:
         string portBallName("/"+getName()+"/ball:rpc");
         portBall.open(portBallName);
         RTF_TEST_REPORT(Asserter::format("Set rpc timeout = %g [s]",rpcTmo));
-        portBall.asPort().setTimeout(rpcTmo);        
+        portBall.asPort().setTimeout(rpcTmo);
         RTF_ASSERT_ERROR_IF(Network::connect(portBallName,"/icubSim/world"),
                             "Unable to connect to /icubSim/world");
 
@@ -200,7 +200,7 @@ public:
     }
 
     /******************************************************************/
-    virtual void tearDown()
+    void tearDown() override
     {
         portL.close();
         portR.close();
@@ -209,15 +209,24 @@ public:
     }
 
     /******************************************************************/
-    virtual void run()
+    void run() override
     {
         unsigned int score=0;
-        
+
         Vector x0(3);
         x0[0]=0.0;
         x0[1]=1.0;
         x0[2]=0.75;
         createBall(x0);
+
+        // connect detectors to controller only when the ball is in the world
+        RTF_ASSERT_ERROR_IF(Network::connect("/left/detector/target",
+                                             "/controller/target/left:i"),
+                            "Unable to connect left detector to controller");
+
+        RTF_ASSERT_ERROR_IF(Network::connect("/right/detector/target",
+                                             "/controller/target/right:i"),
+                            "Unable to connect right detector to controller");
 
         Time::delay(5.0);
 
@@ -230,10 +239,10 @@ public:
         dx[1]=R*sin(theta);
         Vector x=x0+dx;
         setBall(x);
-                
+
         Vector c(2);
         c[0]=320/2; c[1]=240/2;
-        
+
         int nAxes; ienc->getAxes(&nAxes);
         vector<double> encs(nAxes);
 
@@ -241,10 +250,10 @@ public:
         Statistics ul("ul",N,c[0],4,2),vl("vl",N,c[1],4,2),
                    ur("ur",N,c[0],4,2),vr("vr",N,c[1],4,2),
                    tilt("tilt",N,0,2,1),pan("pan",N,0,2,1);
-        
+
         array<bool,6> reached;
         reached.fill(false);
-        
+
         double t0=Time::now();
         while (true)
         {
@@ -254,38 +263,38 @@ public:
                 ul.push(b->get(0).asInt());
                 vl.push(b->get(1).asInt());
             }
-            
+
             if (Bottle *b=portR.read(false))
             {
                 ur.push(b->get(0).asInt());
                 vr.push(b->get(1).asInt());
             }
-            
+
             ienc->getEncoders(encs.data());
             tilt.push(encs[3]);
             pan.push(encs[4]);
-            
-            assing_points(ul,reached[0],4,score);
-            assing_points(vl,reached[1],1,score);
-            assing_points(ur,reached[2],4,score);
-            assing_points(vr,reached[3],1,score);
-            
+
+            assign_points(ul,reached[0],4,score);
+            assign_points(vl,reached[1],1,score);
+            assign_points(ur,reached[2],4,score);
+            assign_points(vr,reached[3],1,score);
+
             if (reached[0]||reached[2])
-                assing_points(tilt,reached[4],2,score);
+                assign_points(tilt,reached[4],2,score);
             if (reached[1]||reached[3])
-                assing_points(pan,reached[5],2,score);
+                assign_points(pan,reached[5],2,score);
 
             bool cumul=true;
             for (auto b:reached)
                 cumul&=b;
-            
+
             if ((t>10.0) || cumul)
                 break;
-                
+
             Time::delay(0.1);
         }
-        
-        RTF_TEST_REPORT("Checking controller against tracking");        
+
+        RTF_TEST_REPORT("Checking controller against tracking");
         ul.reset(); vl.reset();
         reached.fill(false);
 
@@ -294,25 +303,25 @@ public:
         I.reset(x);
         Vector v=x0-x;
         v*=0.15/norm(v);
-        
+
         t0=Time::now();
         while (true)
         {
             double t=Time::now()-t0;
-            setBall(I.integrate(v));            
-            
+            setBall(I.integrate(v));
+
             if (Bottle *b=portL.read(false))
             {
                 ul.push(b->get(0).asInt());
                 vl.push(b->get(1).asInt());
             }
-            
-            assing_points(ul,reached[0],8,score);
-            assing_points(vl,reached[1],4,score);            
+
+            assign_points(ul,reached[0],8,score);
+            assign_points(vl,reached[1],4,score);
 
             if ((t>5.0) || (reached[0]&&reached[1]))
                 break;
-            
+
             Time::delay(Ts);
         }
 
