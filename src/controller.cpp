@@ -91,7 +91,7 @@ protected:
     enum class ControlState { idle, half_armed, armed, run };
     ControlState state;
 
-    array<PID,1> controllers;
+    array<PID,1> controllers;   // FILL IN THE CODE
     int nAxes;
     int ul,vl;
     int ur,vr;
@@ -141,6 +141,7 @@ public:
 
         // set up our controllers
         double Ts=getRate()*0.001;  // period is given in [ms]
+        // FILL IN THE CODE
         controllers[0].set(Ts,0.0,0.0);
         
         // initialize the pixels == image center
@@ -201,6 +202,7 @@ public:
         // perform one control instance
         if (state==ControlState::run)
         {
+            // FILL IN THE CODE
             double eyes_pan=controllers[0].command(0.0,0.0);
         
             // send commands to the robot head
