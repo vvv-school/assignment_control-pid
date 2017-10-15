@@ -109,8 +109,8 @@ class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
             cmd.addDouble(1.0);
             cmd.addDouble(0.0);
             cmd.addDouble(0.0);
-            RTF_ASSERT_ERROR_IF(portBall.write(cmd,reply),
-                                "Unable to talk to world");
+            RTF_ASSERT_ERROR_IF_FALSE(portBall.write(cmd,reply),
+                                      "Unable to talk to world");
             return true;
         }
         else
