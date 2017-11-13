@@ -16,7 +16,7 @@ Some academic resources (take them more seriously :smirk:):
 - [PID control system analysis, design, and technology](https://doi.org/10.1109/TCST.2005.847331)
 - [The Bible of the PID](https://aiecp.files.wordpress.com/2012/07/1-0-1-k-j-astrom-pid-controllers-theory-design-and-tuning-2ed.pdf)
 
-But stop reading and loafing around now :hammer: and heat up the skills that made you a great PID human-tuner :muscle:
+But stop loafing around now :hammer: and heat up the skills that made you a great PID human-tuner :muscle:
 
 # Assignment
 There is a robot standing in a world far away, whose body is fully anchored to the ground. Fortunately, the robot can still gaze around. There is also a magic red ball sticking out from the beautiful landscape. The ball floats insanely in front of the robot, moving along unpredictable trajectories and even teleporting from one place to another.
