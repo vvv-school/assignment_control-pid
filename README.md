@@ -26,7 +26,6 @@ Given that the robot observes the world through its **320x240** couple of camera
 Thereby, you have to **tune a bunch of PID velocity controllers** that will drive the joint motors and in turn we will assign you points incrementally, as you meet the two sets of requirements below.
 
 #### R1. Requirements to satisfy when the ball jumps between locations
-
 1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**.
 1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**.
 1. The _x pixel coordinate_ of the ball in the _right camera image_ shall approach the center: **ur ≈ 160**.
@@ -35,12 +34,10 @@ Thereby, you have to **tune a bunch of PID velocity controllers** that will driv
 1. The robot shall keep the _eyes pan_ close to 0 degrees: **eyes-pan ≈ 0 [deg]**.
 
 #### R2. Requirements to satisfy when the ball moves at constant speed
-
 1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**.
 1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**.
 
 #### Score map
-
 | Requirements | Points |
 |:---:|:---:|
 | R1.1 | 4 |
@@ -55,13 +52,11 @@ Thereby, you have to **tune a bunch of PID velocity controllers** that will driv
 The maximum score you can achieve is therefore **26** :trophy:
 
 ## Expected output
-
 If you'll do your job correctly, the outcome should look like the animation below :sunglasses:
 
 ![output](/misc/output.gif)
 
 ## How to proceed
-
 We provide you with a starter code that contains missing gaps you have to fill in. Don't panic, most of the software to detect the ball and deal with the module infrastructure is already done. **Just focus on the control part**, possibly refining and extending what you'll find therein.
 
 Once done, you can test your code in two ways:
