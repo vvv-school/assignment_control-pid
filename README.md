@@ -57,7 +57,7 @@ If you'll do your job correctly, the outcome should look like the animation belo
 ![output](/misc/output.gif)
 
 ## How to proceed
-We provide you with a starter code that contains missing gaps you have to fill in. Don't panic, most of the software to detect the ball and deal with the module infrastructure is already done. **Just focus on the control part**, possibly refining and extending what you'll find therein.
+We provide you with a starter code (see [**`src/controller.cpp`**](./src/controller.cpp)) that contains missing gaps you have to fill in. Don't panic, most of the software to detect the ball and deal with the module infrastructure is already done. **Just focus on the control part**, possibly refining and extending what you'll find therein.
 
 Once done, you can test your code in two ways:
 
