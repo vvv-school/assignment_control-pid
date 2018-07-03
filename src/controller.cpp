@@ -4,6 +4,7 @@
 //
 // Author: Ugo Pattacini - <ugo.pattacini@iit.it>
 
+#include <cstdlib>
 #include <array>
 #include <string>
 #include <fstream>
@@ -13,13 +14,13 @@
 #include <yarp/os/LogStream.h>
 #include <yarp/os/Time.h>
 #include <yarp/os/RFModule.h>
-#include <yarp/os/RateThread.h>
+#include <yarp/os/PeriodicThread.h>
 #include <yarp/os/BufferedPort.h>
 
 #include <yarp/dev/Drivers.h>
-#include <yarp/dev/IControlMode2.h>
+#include <yarp/dev/IControlMode.h>
 #include <yarp/dev/IEncoders.h>
-#include <yarp/dev/IVelocityControl2.h>
+#include <yarp/dev/IVelocityControl.h>
 #include <yarp/dev/PolyDriver.h>
 
 using namespace std;
@@ -72,13 +73,13 @@ Bottle toBottle(const vector<T> &in)
 }
 
 
-class CtrlThread: public RateThread
+class CtrlThread: public PeriodicThread
 {
 protected:
-    PolyDriver         driver;
-    IControlMode2     *imod;
-    IEncoders         *ienc;
-    IVelocityControl2 *ivel;
+    PolyDriver        driver;
+    IControlMode     *imod;
+    IEncoders        *ienc;
+    IVelocityControl *ivel;
 
     BufferedPort<Bottle> portL;
     BufferedPort<Bottle> portR;
@@ -105,7 +106,7 @@ protected:
     }
 
 public:
-    CtrlThread() : RateThread(1000), rf(nullptr) { }
+    CtrlThread() : PeriodicThread(1.0), rf(nullptr) { }
 
     void setRF(ResourceFinder &rf)
     {
@@ -140,7 +141,7 @@ public:
         portScope.open("/controller/scope:o");
 
         // set up our controllers
-        double Ts=getRate()*0.001;  // period is given in [ms]
+        double Ts=getPeriod();  // period is given in [s]
         // FILL IN THE CODE
         controllers[0].set(Ts,0.0,0.0);
         
@@ -264,8 +265,8 @@ public:
         // retrieve command line options in the form of "--period 0.01"
         double period=rf.check("period",Value(0.01)).asDouble();
 
-        // set the thread rate: integer accounting for [ms]
-        thr.setRate(int(period*1000.0));
+        // set the thread period in [s]
+        thr.setPeriod(period);
 
         // pass on the resource finder
         thr.setRF(rf);
@@ -297,7 +298,7 @@ int main(int argc, char *argv[])
     if (!yarp.checkNetwork())
     {
         yError()<<"YARP doesn't seem to be available";
-        return 1;
+        return EXIT_FAILURE;
     }
 
     ResourceFinder rf;

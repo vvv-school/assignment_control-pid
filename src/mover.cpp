@@ -4,7 +4,7 @@
 //
 // Author: Ugo Pattacini - <ugo.pattacini@iit.it>
 
-
+#include <cstdlib>
 #include <cmath>
 #include <string>
 
@@ -103,7 +103,7 @@ public:
     virtual bool configure(ResourceFinder &rf)
     {
         port.open("/mover");
-        if (!Network::connect(port.getName().c_str(),"/icubSim/world"))
+        if (!Network::connect(port.getName(),"/icubSim/world"))
         {
             yError()<<"Unable to connect to the world!";
             port.close();
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
     if (!yarp.checkNetwork())
     {
         yError()<<"YARP doesn't seem to be available";
-        return 1;
+        return EXIT_FAILURE;
     }
 
     ResourceFinder rf;

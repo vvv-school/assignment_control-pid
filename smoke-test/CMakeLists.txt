@@ -2,7 +2,7 @@
 # Authors: Ugo Pattacini <ugo.pattacini@iit.it>
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
 # enforce C++11 features
 set(CMAKE_CXX_STANDARD 11)
@@ -16,17 +16,14 @@ set(CMAKE_SHARED_MODULE_PREFIX "")
 # add the required cmake packages
 find_package(RTF)
 find_package(RTF 1.3 COMPONENTS DLL)
-find_package(YARP REQUIRED)
+find_package(YARP 3.0.0 REQUIRED COMPONENTS OS sig dev math rtf)
 find_package(ICUB REQUIRED)
 
-list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
 list(APPEND CMAKE_MODULE_PATH ${ICUB_MODULE_PATH})
 
 # add include directories
 include_directories(${CMAKE_SOURCE_DIR}
-                    ${RTF_INCLUDE_DIRS}
-                    ${YARP_INCLUDE_DIRS}
-                    ${ctrlLib_INCLUDE_DIRS})
+                    ${RTF_INCLUDE_DIRS})
 
 # import math symbols from standard cmath
 add_definitions(-D_USE_MATH_DEFINES)
@@ -35,4 +32,4 @@ add_definitions(-D_USE_MATH_DEFINES)
 add_library(${PROJECT_NAME} MODULE test.cpp)
 
 # add required libraries
-target_link_libraries(${PROJECT_NAME} ${RTF_LIBRARIES} ${YARP_LIBRARIES} YARP::YARP_rtf ctrlLib)
+target_link_libraries(${PROJECT_NAME} ${RTF_LIBRARIES} ${YARP_LIBRARIES} ctrlLib)
