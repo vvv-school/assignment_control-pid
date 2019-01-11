@@ -23,21 +23,21 @@ include(ICUBcontribOptions)
 # specify to install in $ICUBcontrib_DIR/bin
 icubcontrib_set_default_prefix()
 
-# import math symbols from standard cmath
-add_definitions(-D_USE_MATH_DEFINES)
-
 # mover
 add_executable(${PROJECT_NAME}-mover ${CMAKE_SOURCE_DIR}/src/mover.cpp)
+target_compile_definitions(${PROJECT_NAME}-mover PRIVATE _USE_MATH_DEFINES)
 target_link_libraries(${PROJECT_NAME}-mover ${YARP_LIBRARIES} ctrlLib)
 install(TARGETS ${PROJECT_NAME}-mover DESTINATION bin)
 
 # detector
 add_executable(${PROJECT_NAME}-detector ${CMAKE_SOURCE_DIR}/src/detector.cpp)
+target_compile_definitions(${PROJECT_NAME}-detector PRIVATE _USE_MATH_DEFINES)
 target_link_libraries(${PROJECT_NAME}-detector ${YARP_LIBRARIES})
 install(TARGETS ${PROJECT_NAME}-detector DESTINATION bin)
 
 # controller
 add_executable(${PROJECT_NAME}-controller ${CMAKE_SOURCE_DIR}/src/controller.cpp)
+target_compile_definitions(${PROJECT_NAME}-controller PRIVATE _USE_MATH_DEFINES)
 target_link_libraries(${PROJECT_NAME}-controller ${YARP_LIBRARIES})
 install(TARGETS ${PROJECT_NAME}-controller DESTINATION bin)
 
