@@ -24,11 +24,11 @@ list(APPEND CMAKE_MODULE_PATH ${ICUB_MODULE_PATH})
 include_directories(${CMAKE_SOURCE_DIR}
                     ${RTF_INCLUDE_DIRS})
 
-# import math symbols from standard cmath
-add_definitions(-D_USE_MATH_DEFINES)
-
 # add the source codes to build the plugin library
 add_library(${PROJECT_NAME} MODULE test.cpp)
+
+# import math symbols from standard cmath
+target_compile_definitions(${PROJECT_NAME} PRIVATE _USE_MATH_DEFINES)
 
 # add required libraries
 target_link_libraries(${PROJECT_NAME} ${RTF_LIBRARIES} ${YARP_LIBRARIES} ctrlLib)
