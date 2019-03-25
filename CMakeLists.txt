@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 11)
 project(assignment_control-pid)
 
 # mandatory use of these packages
-find_package(YARP 3.0.0 REQUIRED)
+find_package(YARP 3.1.101 REQUIRED)
 find_package(ICUB REQUIRED)
 find_package(ICUBcontrib REQUIRED)
 

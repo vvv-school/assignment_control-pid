@@ -10,10 +10,10 @@
 #include <array>
 #include <algorithm>
 
-#include <rtf/dll/Plugin.h>
-#include <rtf/TestAssert.h>
+#include <robottestingframework/dll/Plugin.h>
+#include <robottestingframework/TestAssert.h>
 
-#include <yarp/rtf/TestCase.h>
+#include <yarp/robottestingframework/TestCase.h>
 #include <yarp/os/all.h>
 #include <yarp/dev/all.h>
 #include <yarp/sig/all.h>
@@ -23,7 +23,7 @@
 #include <iCub/ctrl/pids.h>
 
 using namespace std;
-using namespace RTF;
+using namespace robottestingframework;
 using namespace yarp::os;
 using namespace yarp::dev;
 using namespace yarp::sig;
@@ -82,7 +82,7 @@ public:
 };
 
 /**********************************************************************/
-class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
+class TestAssignmentSimpleControlDesign : public yarp::robottestingframework::TestCase
 {
     PolyDriver driver;
     IEncoders *ienc;
@@ -109,7 +109,7 @@ class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
             cmd.addDouble(1.0);
             cmd.addDouble(0.0);
             cmd.addDouble(0.0);
-            RTF_ASSERT_ERROR_IF_FALSE(portBall.write(cmd,reply),
+            ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(portBall.write(cmd,reply),
                                       "Unable to talk to world");
             return true;
         }
@@ -130,7 +130,7 @@ class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
             cmd.addDouble(pos[0]);
             cmd.addDouble(pos[1]);
             cmd.addDouble(pos[2]);
-            RTF_ASSERT_ERROR_IF_FALSE(portBall.write(cmd,reply),
+            ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(portBall.write(cmd,reply),
                                       "Unable to talk to world");
             return true;
         }
@@ -144,7 +144,7 @@ class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
     {
         if (s.reached() && !reached)
         {
-            RTF_TEST_REPORT(Asserter::format("Met requirements on \"%s\" => gained %d points",
+            ROBOTTESTINGFRAMEWORK_TEST_REPORT(Asserter::format("Met requirements on \"%s\" => gained %d points",
                                              s.getName().c_str(),points));
             score+=points;
             reached=true;
@@ -154,7 +154,7 @@ class TestAssignmentSimpleControlDesign : public yarp::rtf::TestCase
 public:
     /******************************************************************/
     TestAssignmentSimpleControlDesign() :
-        yarp::rtf::TestCase("TestAssignmentSimpleControlDesign"),
+        yarp::robottestingframework::TestCase("TestAssignmentSimpleControlDesign"),
         I(0.0,Vector(3,0.0))
     {
     }
@@ -174,24 +174,24 @@ public:
         option.put("remote","/icubSim/head");
         option.put("local","/"+getName());
 
-        RTF_ASSERT_ERROR_IF_FALSE(driver.open(option),"Unable to connect to icubSim");
+        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(driver.open(option),"Unable to connect to icubSim");
         driver.view(ienc);
 
         portL.open("/"+getName()+"/target/left:i");
-        RTF_ASSERT_ERROR_IF_FALSE(Network::connect("/left/detector/target",
+        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect("/left/detector/target",
                                                    portL.getName()),
                                   "Unable to connect to left target");
 
         portR.open("/"+getName()+"/target/right:i");
-        RTF_ASSERT_ERROR_IF_FALSE(Network::connect("/right/detector/target",
+        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect("/right/detector/target",
                                                    portR.getName()),
                                   "Unable to connect to right target");
 
         string portBallName("/"+getName()+"/ball:rpc");
         portBall.open(portBallName);
-        RTF_TEST_REPORT(Asserter::format("Set rpc timeout = %g [s]",rpcTmo));
+        ROBOTTESTINGFRAMEWORK_TEST_REPORT(Asserter::format("Set rpc timeout = %g [s]",rpcTmo));
         portBall.asPort().setTimeout(rpcTmo);
-        RTF_ASSERT_ERROR_IF_FALSE(Network::connect(portBallName,"/icubSim/world"),
+        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect(portBallName,"/icubSim/world"),
                                   "Unable to connect to /icubSim/world");
 
         Rand::init();
@@ -220,17 +220,17 @@ public:
         createBall(x0);
 
         // connect detectors to controller only when the ball is in the world
-        RTF_ASSERT_ERROR_IF_FALSE(Network::connect("/left/detector/target",
+        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect("/left/detector/target",
                                                    "/controller/target/left:i"),
                                   "Unable to connect left detector to controller");
 
-        RTF_ASSERT_ERROR_IF_FALSE(Network::connect("/right/detector/target",
+        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect("/right/detector/target",
                                                    "/controller/target/right:i"),
                                   "Unable to connect right detector to controller");
 
         Time::delay(5.0);
 
-        RTF_TEST_REPORT("Checking controller against p2p movements");
+        ROBOTTESTINGFRAMEWORK_TEST_REPORT("Checking controller against p2p movements");
         double R=0.2;
         double theta=(M_PI/180.0)*(Rand::scalar(-20.0,20.0)+
                                    180.0*round(Rand::scalar(0.0,1.0)));
@@ -294,7 +294,7 @@ public:
             Time::delay(0.1);
         }
 
-        RTF_TEST_REPORT("Checking controller against tracking");
+        ROBOTTESTINGFRAMEWORK_TEST_REPORT("Checking controller against tracking");
         ul.reset(); vl.reset();
         reached.fill(false);
 
@@ -326,8 +326,8 @@ public:
         }
 
         score=std::min(score,100U);
-        RTF_TEST_CHECK(score>0,Asserter::format("Total score = %d",score));
+        ROBOTTESTINGFRAMEWORK_TEST_CHECK(score>0,Asserter::format("Total score = %d",score));
     }
 };
 
-PREPARE_PLUGIN(TestAssignmentSimpleControlDesign)
+ROBOTTESTINGFRAMEWORK_PREPARE_PLUGIN(TestAssignmentSimpleControlDesign)
