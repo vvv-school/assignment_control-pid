@@ -1,6 +1,8 @@
 Design a simple PID to control a robot head
 ===========================================
 
+[![Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://www.gitpod.io/docs/10_getting_started)
+
 # Prerequisites
 You are supposed to know something on what a [PID controller](https://en.wikipedia.org/wiki/PID_controller) can do for you and why it is so versatile and effective :wink:
 
