@@ -56,7 +56,7 @@ The maximum score you can achieve is therefore **26** :trophy:
 ## Expected output
 If you'll do your job correctly, the outcome should look like the animation below :sunglasses:
 
-![output](/misc/output.gif)
+![output](/assets/output.gif)
 
 ## How to proceed
 We provide you with a starter code (see [**`src/controller.cpp`**](./src/controller.cpp)) that contains missing gaps you have to fill in. Don't panic, most of the software to detect the ball and deal with the module infrastructure is already done. **Just focus on the control part**, possibly refining and extending what you'll find therein.
@@ -75,6 +75,6 @@ $ ./plot.sh
 ```
 You will obtain temporal diagrams like this one :sparkles:
 
-![profiles](/misc/profiles.png)
+![profiles](/assets/profiles.png)
 
 # [How to complete the assignment](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md)
