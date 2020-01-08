@@ -109,8 +109,8 @@ class TestAssignmentSimpleControlDesign : public yarp::robottestingframework::Te
             cmd.addDouble(1.0);
             cmd.addDouble(0.0);
             cmd.addDouble(0.0);
-            ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(portBall.write(cmd,reply),
-                                      "Unable to talk to world");
+            if (!portBall.write(cmd,reply))
+                ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to talk to world");
             return true;
         }
         else
@@ -130,8 +130,8 @@ class TestAssignmentSimpleControlDesign : public yarp::robottestingframework::Te
             cmd.addDouble(pos[0]);
             cmd.addDouble(pos[1]);
             cmd.addDouble(pos[2]);
-            ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(portBall.write(cmd,reply),
-                                      "Unable to talk to world");
+            if (!portBall.write(cmd,reply))
+                ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to talk to world");
             return true;
         }
         else
@@ -174,25 +174,24 @@ public:
         option.put("remote","/icubSim/head");
         option.put("local","/"+getName());
 
-        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(driver.open(option),"Unable to connect to icubSim");
+        if (!driver.open(option))
+            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect to icubSim");
         driver.view(ienc);
 
         portL.open("/"+getName()+"/target/left:i");
-        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect("/left/detector/target",
-                                                   portL.getName()),
-                                  "Unable to connect to left target");
+        if (!Network::connect("/left/detector/target",portL.getName()))
+            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect to left target");
 
         portR.open("/"+getName()+"/target/right:i");
-        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect("/right/detector/target",
-                                                   portR.getName()),
-                                  "Unable to connect to right target");
+        if (!Network::connect("/right/detector/target",portR.getName()))
+            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect to right target");
 
         string portBallName("/"+getName()+"/ball:rpc");
         portBall.open(portBallName);
         ROBOTTESTINGFRAMEWORK_TEST_REPORT(Asserter::format("Set rpc timeout = %g [s]",rpcTmo));
         portBall.asPort().setTimeout(rpcTmo);
-        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect(portBallName,"/icubSim/world"),
-                                  "Unable to connect to /icubSim/world");
+        if (!Network::connect(portBallName,"/icubSim/world"))
+            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect to /icubSim/world");
 
         Rand::init();
 
@@ -220,13 +219,11 @@ public:
         createBall(x0);
 
         // connect detectors to controller only when the ball is in the world
-        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect("/left/detector/target",
-                                                   "/controller/target/left:i"),
-                                  "Unable to connect left detector to controller");
+        if (!Network::connect("/left/detector/target","/controller/target/left:i"))
+            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect left detector to controller");
 
-        ROBOTTESTINGFRAMEWORK_ASSERT_ERROR_IF_FALSE(Network::connect("/right/detector/target",
-                                                   "/controller/target/right:i"),
-                                  "Unable to connect right detector to controller");
+        if (!Network::connect("/right/detector/target","/controller/target/right:i"))
+            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect right detector to controller");
 
         Time::delay(5.0);
 
