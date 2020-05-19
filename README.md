@@ -9,6 +9,7 @@ You are supposed to know something on what a [PID controller](https://en.wikiped
 If that's not the case yet, here's below an _eclectic incomplete not-at-all curated list_ of quick or semi-quick refreshers on the argument:
 - [PID for dummies](https://www.csimn.com/CSI_pages/PIDforDummies.html)
 - [The basics of tuning PID loops](https://innovativecontrols.com/blog/basics-tuning-pid-loops)
+- [What is a control system anyway?](https://feltrac.co/control/2020/01/12/simple-control-systems.html)
 - [How should I tune my copter?](https://github.com/betaflight/betaflight/wiki/PID-Tuning-Guide)
 - [The good SE resource](https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops)
 - [PID controller tuning in Simulink](https://it.mathworks.com/help/slcontrol/gs/automated-tuning-of-simulink-pid-controller-block.html)
