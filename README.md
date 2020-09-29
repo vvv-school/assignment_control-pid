@@ -12,7 +12,7 @@ If that's not the case yet, here's below an _eclectic incomplete not-at-all cura
 - [What is a control system anyway?](https://feltrac.co/control/2020/01/12/simple-control-systems.html)
 - [How should I tune my copter?](https://github.com/betaflight/betaflight/wiki/PID-Tuning-Guide)
 - [The good SE resource](https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops)
-- [PID controller tuning in Simulink](https://it.mathworks.com/help/slcontrol/gs/automated-tuning-of-simulink-pid-controller-block.html)
+- [PID controllers in MATLAB/Simulink](https://www.mathworks.com/discovery/pid-control.html)
 - [Did you already take on these awesome control challenges?](https://janismac.github.io/ControlChallenges)
 
 Some academic resources (take them more seriously :smirk:):
