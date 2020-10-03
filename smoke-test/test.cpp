@@ -94,44 +94,19 @@ class TestAssignmentSimpleControlDesign : public yarp::robottestingframework::Te
     Integrator I;
 
     /******************************************************************/
-    bool createBall(const Vector& pos)
-    {
-        if (pos.length()>=3)
-        {
-            Bottle cmd,reply;
-            cmd.addString("world");
-            cmd.addString("mk");
-            cmd.addString("ssph");
-            cmd.addDouble(0.03);
-            cmd.addDouble(pos[0]);
-            cmd.addDouble(pos[1]);
-            cmd.addDouble(pos[2]);
-            cmd.addDouble(1.0);
-            cmd.addDouble(0.0);
-            cmd.addDouble(0.0);
-            if (!portBall.write(cmd,reply))
-                ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to talk to world");
-            return true;
-        }
-        else
-            return false;
-    }
-
-    /******************************************************************/
     bool setBall(const Vector& pos)
     {
         if (pos.length()>=3)
         {
             Bottle cmd,reply;
-            cmd.addString("world");
-            cmd.addString("set");
-            cmd.addString("ssph");
-            cmd.addInt(1);
+            cmd.addVocab(Vocab::encode("set"));
             cmd.addDouble(pos[0]);
             cmd.addDouble(pos[1]);
             cmd.addDouble(pos[2]);
             if (!portBall.write(cmd,reply))
                 ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to talk to world");
+            if (reply.get(0).asVocab()!=Vocab::encode("ack"))
+                ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Invalid reply from world");
             return true;
         }
         else
@@ -190,8 +165,8 @@ public:
         portBall.open(portBallName);
         ROBOTTESTINGFRAMEWORK_TEST_REPORT(Asserter::format("Set rpc timeout = %g [s]",rpcTmo));
         portBall.asPort().setTimeout(rpcTmo);
-        if (!Network::connect(portBallName,"/icubSim/world"))
-            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect to /icubSim/world");
+        if (!Network::connect(portBallName,"/assignment_control-pid-ball/rpc"))
+            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect to /assignment_control-pid-ball/rpc");
 
         Rand::init();
 
@@ -213,17 +188,10 @@ public:
         unsigned int score=0;
 
         Vector x0(3);
-        x0[0]=0.0;
-        x0[1]=1.0;
-        x0[2]=0.75;
-        createBall(x0);
-
-        // connect detectors to controller only when the ball is in the world
-        if (!Network::connect("/left/detector/target","/controller/target/left:i"))
-            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect left detector to controller");
-
-        if (!Network::connect("/right/detector/target","/controller/target/right:i"))
-            ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect right detector to controller");
+        x0[0]=-1.0;
+        x0[1]=0.0;
+        x0[2]=1.0;
+        setBall(x0);
 
         Time::delay(5.0);
 
@@ -232,8 +200,8 @@ public:
         double theta=(M_PI/180.0)*(Rand::scalar(-20.0,20.0)+
                                    180.0*round(Rand::scalar(0.0,1.0)));
         Vector dx(3,0.0);
-        dx[0]=R*cos(theta);
-        dx[1]=R*sin(theta);
+        dx[1]=R*cos(theta);
+        dx[2]=R*sin(theta);
         Vector x=x0+dx;
         setBall(x);
 
@@ -257,14 +225,14 @@ public:
             double t=Time::now()-t0;
             if (Bottle *b=portL.read(false))
             {
-                ul.push(b->get(0).asInt());
-                vl.push(b->get(1).asInt());
+                ul.push(b->get(1).asInt());
+                vl.push(b->get(2).asInt());
             }
 
             if (Bottle *b=portR.read(false))
             {
-                ur.push(b->get(0).asInt());
-                vr.push(b->get(1).asInt());
+                ur.push(b->get(1).asInt());
+                vr.push(b->get(2).asInt());
             }
 
             ienc->getEncoders(encs.data());
@@ -292,14 +260,14 @@ public:
         }
 
         ROBOTTESTINGFRAMEWORK_TEST_REPORT("Checking controller against tracking");
-        ul.reset(); vl.reset();
+        Statistics track_ul("ul",N,c[0],6,3),track_vl("vl",N,c[1],6,3);
         reached.fill(false);
 
         double Ts=0.02;
         I.setTs(Ts);
         I.reset(x);
         Vector v=x0-x;
-        v*=0.15/norm(v);
+        v*=0.1/norm(v);
 
         t0=Time::now();
         while (true)
@@ -309,12 +277,12 @@ public:
 
             if (Bottle *b=portL.read(false))
             {
-                ul.push(b->get(0).asInt());
-                vl.push(b->get(1).asInt());
+                track_ul.push(b->get(1).asInt());
+                track_vl.push(b->get(2).asInt());
             }
 
-            assign_points(ul,reached[0],8,score);
-            assign_points(vl,reached[1],4,score);
+            assign_points(track_ul,reached[0],8,score);
+            assign_points(track_vl,reached[1],4,score);
 
             if ((t>5.0) || (reached[0]&&reached[1]))
                 break;

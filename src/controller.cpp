@@ -9,6 +9,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <limits>
 
 #include <yarp/os/Network.h>
 #include <yarp/os/LogStream.h>
@@ -94,6 +95,7 @@ protected:
 
     array<PID,1> controllers;   // FILL IN THE CODE
     int nAxes;
+    bool objl,objr;
     int ul,vl;
     int ur,vr;
 
@@ -146,6 +148,7 @@ public:
         controllers[0].set(Ts,0.0,0.0);
         
         // initialize the pixels == image center
+        objl=objr=false;
         ul=ur=320/2;
         vl=vr=240/2;
 
@@ -172,15 +175,17 @@ public:
         // something has arrived
         if (pTargetL!=nullptr)
         {
-            ul=pTargetL->get(0).asInt();
-            vl=pTargetL->get(1).asInt();
+            objl=(pTargetL->get(0).asInt()>0);
+            ul=pTargetL->get(1).asInt();
+            vl=pTargetL->get(2).asInt();
             handleControlState();
         }
 
         if (pTargetR!=nullptr)
         {
-            ur=pTargetR->get(0).asInt();
-            vr=pTargetR->get(1).asInt();
+            objr=(pTargetR->get(0).asInt()>0);
+            ur=pTargetR->get(1).asInt();
+            vr=pTargetR->get(2).asInt();
             handleControlState();
         }
 
@@ -190,6 +195,11 @@ public:
         {
             vector<int> modes(nAxes,VOCAB_CM_VELOCITY);
             imod->setControlModes(modes.data());
+
+            // disable slew rate on velocity commands
+            // that are due to limited accelerations
+            vector<double> accs(nAxes,numeric_limits<double>::max());
+            ivel->setRefAccelerations(accs.data());
             state=ControlState::run;
         }
 
@@ -201,7 +211,7 @@ public:
         vector<double> velocity(nAxes,0.0);
 
         // perform one control instance
-        if (state==ControlState::run)
+        if ((state==ControlState::run) && objl && objr)
         {
             // FILL IN THE CODE
             double eyes_pan=controllers[0].command(0.0,0.0);

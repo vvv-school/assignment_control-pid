@@ -10,6 +10,7 @@
 
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
+#include <yarp/os/Vocab.h>
 #include <yarp/os/LogStream.h>
 #include <yarp/os/RFModule.h>
 #include <yarp/os/Bottle.h>
@@ -39,37 +40,18 @@ private:
     
     double t0;
     int cnt;
-    
-    void createBall()
+        
+    bool setBall(const Vector& pos)
     {
-        Bottle cmd,reply;
-        cmd.addString("world");
-        cmd.addString("mk");
-        cmd.addString("ssph");
-        cmd.addDouble(0.03);
-        cmd.addDouble(x0[0]);
-        cmd.addDouble(x0[1]);
-        cmd.addDouble(x0[2]);
-        cmd.addDouble(1.0);
-        cmd.addDouble(0.0);
-        cmd.addDouble(0.0);
-        port.write(cmd,reply);        
-    }
-    
-    bool setBall(const Vector &x)
-    {
-        if (x.length()>=3)
+        if (pos.length()>=3)
         {
             Bottle cmd,reply;
-            cmd.addString("world");
-            cmd.addString("set");
-            cmd.addString("ssph");
-            cmd.addInt(1);
-            cmd.addDouble(x[0]);
-            cmd.addDouble(x[1]);
-            cmd.addDouble(x[2]);
+            cmd.addVocab(Vocab::encode("set"));
+            cmd.addDouble(pos[0]);
+            cmd.addDouble(pos[1]);
+            cmd.addDouble(pos[2]);
             port.write(cmd,reply);
-            return true;
+            return (reply.get(0).asVocab()==Vocab::encode("ack"));
         }
         else
             return false;
@@ -81,8 +63,8 @@ private:
         double theta=(M_PI/180.0)*(Rand::scalar(-20.0,20.0)+
                                    180.0*round(Rand::scalar(0.0,1.0)));
         Vector dx(3,0.0);
-        dx[0]=R*cos(theta);
-        dx[1]=R*sin(theta);
+        dx[1]=R*cos(theta);
+        dx[2]=R*sin(theta);
         return dx;        
     }
     
@@ -103,7 +85,7 @@ public:
     virtual bool configure(ResourceFinder &rf)
     {
         port.open("/mover");
-        if (!Network::connect(port.getName(),"/icubSim/world"))
+        if (!Network::connect(port.getName(),"/assignment_control-pid-ball/rpc"))
         {
             yError()<<"Unable to connect to the world!";
             port.close();
@@ -111,9 +93,9 @@ public:
         }
 
         x0.resize(3);
-        x0[0]=0.0;
-        x0[1]=1.0;
-        x0[2]=0.75;
+        x0[0]=-1.0;
+        x0[1]=0.0;
+        x0[2]=1.0;
 
         Rand::init();
         I.setTs(getPeriod());
@@ -136,7 +118,7 @@ public:
     {
         if (state==State::init)
         {
-            createBall();            
+            setBall(x0);
             Time::delay(5.0);
             state=State::p2p;
             cnt=0;

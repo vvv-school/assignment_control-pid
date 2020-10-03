@@ -42,12 +42,12 @@ public:
                 for (int y=0; y<image->height(); y++)
                 {
                     PixelRgb& pixel = image->pixel(x,y);
-                    // very simple test for redishness
+                    // very simple test for reddishness
                     // make sure red level exceeds blue and green by a factor of 2
                     // plus some threshold
                     if ((pixel.r>pixel.b*5.0) && (pixel.r>pixel.g*5.0))
                     {
-                        // there's a redish pixel at (x,y)!
+                        // there's a reddish pixel at (x,y)!
                         // let's find the average location of these pixels
 
                         // accumulate x
@@ -69,6 +69,7 @@ public:
 
             Bottle &target=targetPort.prepare();
             target.clear();
+            target.addInt(ct);
             target.addInt((int)xMean);
             target.addInt((int)yMean);
 
