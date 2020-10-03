@@ -6,14 +6,19 @@
         <author email="ugo.pattacini@iit.it">Ugo Pattacini</author>
     </authors>
     <module>
-        <name>iCub_SIM</name>
+        <name>gzserver</name>
+        <parameters>assignment_control-pid.sdf</parameters>
+        <node>testnode</node>
+    </module>
+    <module>
+        <name>gzclient</name>
         <node>testnode</node>
     </module>
     <module>
         <name>assignment_control-pid-detector</name>
         <prefix>/left</prefix>
         <dependencies>
-            <port timeout="10">/icubSim/cam/left</port>
+            <port timeout="10">/icubSim/cam/left/rgbImage:o</port>
         </dependencies>
         <node>testnode</node>
     </module>
@@ -21,7 +26,7 @@
         <name>assignment_control-pid-detector</name>
         <prefix>/right</prefix>
         <dependencies>
-            <port timeout="10">/icubSim/cam/right</port>
+            <port timeout="10">/icubSim/cam/right/rgbImage:o</port>
         </dependencies>
         <node>testnode</node>
     </module>
@@ -34,14 +39,36 @@
         </dependencies>
         <node>testnode</node>
     </module>
+    <module>
+        <name>yarpscope</name>
+        <parameters>--remote /controller/scope:o --x 720 --y 10
+                    --dx 100 --dx 1000 --min 50 --max 250
+                    --index "(0 1 2 3)" --color "(Blue Red Green Magenta)"
+                    --bgcolor White --interval 100 --size 50
+        </parameters>
+        <dependencies>
+          <port timeout="20">/controller/scope:o</port>
+        </dependencies>
+        <node>testnode</node>
+    </module>
     <connection>
-        <from>/icubSim/cam/left</from>
+        <from>/icubSim/cam/left/rgbImage:o</from>
         <to>/left/detector/image/in</to>
-        <protocol>udp</protocol>
+        <protocol>unix_stream</protocol>
     </connection>
     <connection>
-        <from>/icubSim/cam/right</from>
+        <from>/icubSim/cam/right/rgbImage:o</from>
         <to>/right/detector/image/in</to>
-        <protocol>udp</protocol>
+        <protocol>unix_stream</protocol>
+    </connection>
+    <connection>
+        <from>/left/detector/target</from>
+        <to>/controller/target/left:i</to>
+        <protocol>tcp</protocol>
+    </connection>
+    <connection>
+        <from>/right/detector/target</from>
+        <to>/controller/target/right:i</to>
+        <protocol>tcp</protocol>
     </connection>
 </application>

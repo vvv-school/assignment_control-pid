@@ -60,27 +60,27 @@
   </module>
   
   <connection>
-      <from>/icubSim/cam/left</from>
+      <from>/icubSim/cam/left/rgbImage:o</from>
       <to>/left/detector/image/in</to>
-      <protocol>udp</protocol>
+      <protocol>unix_stream</protocol>
   </connection>
   
   <connection>
-      <from>/icubSim/cam/right</from>
+      <from>/icubSim/cam/right/rgbImage:o</from>
       <to>/right/detector/image/in</to>
-      <protocol>udp</protocol>
+      <protocol>unix_stream</protocol>
   </connection>  
   
   <connection>
       <from>/left/detector/image/out</from>
       <to>/viewer/left</to>
-      <protocol>udp</protocol>
+      <protocol>unix_stream</protocol>
   </connection> 
 
   <connection>
       <from>/right/detector/image/out</from>
       <to>/viewer/right</to>
-      <protocol>udp</protocol>
+      <protocol>unix_stream</protocol>
   </connection> 
 
   <connection>
