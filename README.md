@@ -22,7 +22,7 @@ Some academic resources (take them more seriously :smirk:):
 But stop loafing around now :hammer: and heat up the skills that made you a great PID human-tuner :muscle:
 
 # Assignment
-There is a robot standing in a world far away, whose body is fully anchored to the ground. Fortunately, the robot can still gaze around. There is also a magic red ball sticking out from the beautiful landscape. The ball floats insanely in front of the robot, moving along unpredictable trajectories and even teleporting from one place to another.
+There is a robot standing in a world far away, whose body is fully anchored to the ground. Fortunately, the robot can still gaze around. There is also a magic red ball sticking out from the grey landscape. The ball floats insanely in front of the robot, moving along unpredictable trajectories and even teleporting from one place to another.
 
 Given that the robot observes the world through its **320x240** couple of cameras, your task is "simply" :laughing: to **let the robot look constantly at the floating ball**, as fast as possible, controlling both the eyes and the neck.
 
