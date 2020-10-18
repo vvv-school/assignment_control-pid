@@ -10,31 +10,27 @@
 
   <module>
       <name>assignment_control-pid-mover</name>      
-      <environment>YARP_FORWARD_LOG_ENABLE=1</environment>
-      <environment>YARP_CLOCK=/clock</environment>
+      <environment>YARP_FORWARD_LOG_ENABLE=1;YARP_CLOCK=/clock</environment>
       <node>localhost</node>
   </module>
 
   <module>
       <name>assignment_control-pid-detector</name>
       <prefix>/left</prefix>
-      <environment>YARP_FORWARD_LOG_ENABLE=1</environment>
-      <environment>YARP_CLOCK=/clock</environment>
+      <environment>YARP_FORWARD_LOG_ENABLE=1;YARP_CLOCK=/clock</environment>
       <node>localhost</node>
   </module>
 
   <module>
       <name>assignment_control-pid-detector</name>
       <prefix>/right</prefix>
-      <environment>YARP_FORWARD_LOG_ENABLE=1</environment>
-      <environment>YARP_CLOCK=/clock</environment>
+      <environment>YARP_FORWARD_LOG_ENABLE=1;YARP_CLOCK=/clock</environment>
       <node>localhost</node>
   </module>
   
   <module>
       <name>assignment_control-pid-controller</name>
-      <environment>YARP_FORWARD_LOG_ENABLE=1</environment>
-      <environment>YARP_CLOCK=/clock</environment>
+      <environment>YARP_FORWARD_LOG_ENABLE=1;YARP_CLOCK=/clock</environment>
       <node>localhost</node>
   </module>
 
