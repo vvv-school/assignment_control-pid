@@ -7,7 +7,7 @@
     </authors>
     <module>
         <name>gzserver</name>
-        <parameters>assignment_control-pid.sdf</parameters>
+        <parameters>-s libgazebo_yarp_clock.so assignment_control-pid.sdf</parameters>
         <node>testnode</node>
     </module>
     <module>
@@ -20,6 +20,7 @@
         <dependencies>
             <port timeout="10">/icubSim/cam/left/rgbImage:o</port>
         </dependencies>
+        <environment>YARP_CLOCK=/clock</environment>
         <node>testnode</node>
     </module>
     <module>
@@ -28,6 +29,7 @@
         <dependencies>
             <port timeout="10">/icubSim/cam/right/rgbImage:o</port>
         </dependencies>
+        <environment>YARP_CLOCK=/clock</environment>
         <node>testnode</node>
     </module>
     <module>
@@ -37,6 +39,7 @@
             <port timeout="10">/left/detector/target</port>
             <port timeout="10">/right/detector/target</port>
         </dependencies>
+        <environment>YARP_CLOCK=/clock</environment>
         <node>testnode</node>
     </module>
     <module>

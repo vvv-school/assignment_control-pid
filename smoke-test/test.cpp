@@ -169,13 +169,14 @@ public:
             ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to connect to /assignment_control-pid-ball/rpc");
 
         Rand::init();
-
+        Time::useNetworkClock("/clock");
         return true;
     }
 
     /******************************************************************/
     void tearDown() override
     {
+        Time::useSystemClock();
         portL.close();
         portR.close();
         portBall.close();
@@ -211,7 +212,7 @@ public:
         int nAxes; ienc->getAxes(&nAxes);
         vector<double> encs(nAxes);
 
-        unsigned int N=10;
+        unsigned int N=20;
         Statistics ul("ul",N,c[0],4,2),vl("vl",N,c[1],4,2),
                    ur("ur",N,c[0],4,2),vr("vr",N,c[1],4,2),
                    tilt("tilt",N,0,2,1),pan("pan",N,0,2,1);

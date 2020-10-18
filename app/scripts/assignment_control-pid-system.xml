@@ -10,7 +10,7 @@
 
   <module>
       <name>gzserver</name>
-      <parameters>assignment_control-pid.sdf</parameters>
+      <parameters>-s libgazebo_yarp_clock.so assignment_control-pid.sdf</parameters>
       <dependencies>
          <port timeout="20">/yarplogger</port>
       </dependencies>
