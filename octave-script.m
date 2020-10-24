@@ -3,7 +3,10 @@ arg_list=argv();
 fin=arg_list{1};
 
 data=load(fin);
-data(end,:)=[];
+
+% clean up leftovers
+[~,idx]=max(diff(data(:,1)));
+data(idx:end,:)=[];
 
 % plot data
 hax1=subplot(2,1,1);
