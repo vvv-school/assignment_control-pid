@@ -82,4 +82,6 @@ You will obtain temporal diagrams like this one :sparkles:
   <img src="/assets/profiles.png"/>
 </p>
 
+Once done, type `quit` to return to the shell.
+
 # [How to complete the assignment](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md)
