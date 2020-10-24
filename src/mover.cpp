@@ -127,7 +127,7 @@ public:
         {
             Vector x=x0+draw_point();
             setBall(x);
-            Time::delay(15.0);
+            Time::delay(7.5);
             if (++cnt>2)
             {
                 draw_velocity(x);

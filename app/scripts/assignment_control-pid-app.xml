@@ -56,6 +56,7 @@
       <dependencies>
           <port timeout="20">/controller/scope:o</port>
       </dependencies>
+      <environment>YARP_CLOCK=/clock</environment>
       <node>localhost</node>
   </module>
   
