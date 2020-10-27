@@ -28,7 +28,7 @@ Given that the robot observes the world through its **320x240** couple of camera
 
 Thereby, you have to **tune a bunch of PID velocity controllers** that will drive the joint motors and in turn we will assign you points incrementally, as you meet the two sets of requirements below.
 
-#### R1. Requirements to satisfy when the ball jumps between locations
+#### R1. Requirements to satisfy when the ball beams up into a new location
 1. The _x pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **ul ≈ 160**.
 1. The _y pixel coordinate_ of the ball in the _left camera image_ shall approach the center: **vl ≈ 120**.
 1. The _x pixel coordinate_ of the ball in the _right camera image_ shall approach the center: **ur ≈ 160**.
