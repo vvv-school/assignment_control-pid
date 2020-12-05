@@ -63,25 +63,25 @@
   <connection>
       <from>/icubSim/cam/left/rgbImage:o</from>
       <to>/left/detector/image/in</to>
-      <protocol>unix_stream</protocol>
+      <protocol>fast_tcp</protocol>
   </connection>
   
   <connection>
       <from>/icubSim/cam/right/rgbImage:o</from>
       <to>/right/detector/image/in</to>
-      <protocol>unix_stream</protocol>
+      <protocol>fast_tcp</protocol>
   </connection>  
   
   <connection>
       <from>/left/detector/image/out</from>
       <to>/viewer/left</to>
-      <protocol>unix_stream</protocol>
+      <protocol>fast_tcp</protocol>
   </connection> 
 
   <connection>
       <from>/right/detector/image/out</from>
       <to>/viewer/right</to>
-      <protocol>unix_stream</protocol>
+      <protocol>fast_tcp</protocol>
   </connection> 
 
   <connection>
