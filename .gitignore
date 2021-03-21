@@ -4,3 +4,6 @@ result.txt
 
 # Linux temp files
 *~
+
+# Octave leftovers
+octave-workspace
