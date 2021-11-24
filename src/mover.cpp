@@ -46,12 +46,12 @@ private:
         if (pos.length()>=3)
         {
             Bottle cmd,reply;
-            cmd.addVocab(Vocab::encode("set"));
-            cmd.addDouble(pos[0]);
-            cmd.addDouble(pos[1]);
-            cmd.addDouble(pos[2]);
+            cmd.addVocab32("set");
+            cmd.addFloat64(pos[0]);
+            cmd.addFloat64(pos[1]);
+            cmd.addFloat64(pos[2]);
             port.write(cmd,reply);
-            return (reply.get(0).asVocab()==Vocab::encode("ack"));
+            return (reply.get(0).asVocab32()==Vocab32::encode("ack"));
         }
         else
             return false;

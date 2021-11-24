@@ -46,26 +46,26 @@ class WorldHandler : public gazebo::WorldPlugin
             if (returnToSender != nullptr) {
                 yarp::os::Bottle rep;
                 std::lock_guard<std::mutex> lck(hdl->mtx);
-                if (cmd.get(0).asVocab() == yarp::os::Vocab::encode("get")) {
+                if (cmd.get(0).asVocab32() == yarp::os::Vocab32::encode("get")) {
                     const auto& p = hdl->cur_pose.Pos();
-                    rep.addVocab(yarp::os::Vocab::encode("ack"));
-                    rep.addDouble(p.X());
-                    rep.addDouble(p.Y());
-                    rep.addDouble(p.Z());
-                } else if (cmd.get(0).asVocab() == yarp::os::Vocab::encode("set")) {
+                    rep.addVocab32("ack");
+                    rep.addFloat64(p.X());
+                    rep.addFloat64(p.Y());
+                    rep.addFloat64(p.Z());
+                } else if (cmd.get(0).asVocab32() == yarp::os::Vocab32::encode("set")) {
                     if (cmd.size() >= 4) {
-                        const auto x = cmd.get(1).asDouble();
-                        const auto y = cmd.get(2).asDouble();
-                        const auto z = cmd.get(3).asDouble();
+                        const auto x = cmd.get(1).asFloat64();
+                        const auto y = cmd.get(2).asFloat64();
+                        const auto z = cmd.get(3).asFloat64();
                         const auto& q = hdl->cur_pose.Rot();
                         hdl->new_pose = ignition::math::Pose3d(x, y, z, q.W(), q.X(), q.Y(), q.Z());
                         hdl->set_new_pose = true;
-                        rep.addVocab(yarp::os::Vocab::encode("ack"));
+                        rep.addVocab32("ack");
                     } else {
-                        rep.addVocab(yarp::os::Vocab::encode("nack"));
+                        rep.addVocab32("nack");
                     }
                 } else {
-                    rep.addVocab(yarp::os::Vocab::encode("nack"));
+                    rep.addVocab32("nack");
                 }
                 rep.write(*returnToSender);
             }

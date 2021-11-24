@@ -99,13 +99,13 @@ class TestAssignmentSimpleControlDesign : public yarp::robottestingframework::Te
         if (pos.length()>=3)
         {
             Bottle cmd,reply;
-            cmd.addVocab(Vocab::encode("set"));
-            cmd.addDouble(pos[0]);
-            cmd.addDouble(pos[1]);
-            cmd.addDouble(pos[2]);
+            cmd.addVocab32("set");
+            cmd.addFloat64(pos[0]);
+            cmd.addFloat64(pos[1]);
+            cmd.addFloat64(pos[2]);
             if (!portBall.write(cmd,reply))
                 ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Unable to talk to world");
-            if (reply.get(0).asVocab()!=Vocab::encode("ack"))
+            if (reply.get(0).asVocab32()!=Vocab32::encode("ack"))
                 ROBOTTESTINGFRAMEWORK_ASSERT_FAIL("Invalid reply from world");
             return true;
         }
@@ -142,7 +142,7 @@ public:
     /******************************************************************/
     bool setup(yarp::os::Property& property) override
     {
-        float rpcTmo=(float)property.check("rpc-timeout",Value(10.0)).asDouble();
+        float rpcTmo=(float)property.check("rpc-timeout",Value(10.0)).asFloat64();
 
         Property option;
         option.put("device","remote_controlboard");
@@ -226,14 +226,14 @@ public:
             double t=Time::now()-t0;
             if (Bottle *b=portL.read(false))
             {
-                ul.push(b->get(1).asInt());
-                vl.push(b->get(2).asInt());
+                ul.push(b->get(1).asInt32());
+                vl.push(b->get(2).asInt32());
             }
 
             if (Bottle *b=portR.read(false))
             {
-                ur.push(b->get(1).asInt());
-                vr.push(b->get(2).asInt());
+                ur.push(b->get(1).asInt32());
+                vr.push(b->get(2).asInt32());
             }
 
             ienc->getEncoders(encs.data());
@@ -278,8 +278,8 @@ public:
 
             if (Bottle *b=portL.read(false))
             {
-                track_ul.push(b->get(1).asInt());
-                track_vl.push(b->get(2).asInt());
+                track_ul.push(b->get(1).asInt32());
+                track_vl.push(b->get(2).asInt32());
             }
 
             assign_points(track_ul,reached[0],8,score);

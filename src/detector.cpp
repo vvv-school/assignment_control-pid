@@ -69,9 +69,9 @@ public:
 
             Bottle &target=targetPort.prepare();
             target.clear();
-            target.addInt(ct);
-            target.addInt((int)xMean);
-            target.addInt((int)yMean);
+            target.addInt32(ct);
+            target.addInt32((int)xMean);
+            target.addInt32((int)yMean);
 
             yInfo()<<"Target: "<<target.toString();
             targetPort.write();
@@ -92,9 +92,9 @@ public:
     {
         Bottle &target=targetPort.prepare();
         target.clear();
-        target.addDouble(0);
-        target.addDouble(0);
-        target.addInt(0);
+        target.addFloat64(0.);
+        target.addFloat64(0.);
+        target.addInt32(0);
 
         targetPort.writeStrict();
         outPort.write();

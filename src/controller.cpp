@@ -69,7 +69,7 @@ Bottle toBottle(const vector<T> &in)
 {
     Bottle b;
     for (auto v:in)
-        b.addDouble(v);
+        b.addFloat64(v);
     return b;
 }
 
@@ -175,17 +175,17 @@ public:
         // something has arrived
         if (pTargetL!=nullptr)
         {
-            objl=(pTargetL->get(0).asInt()>0);
-            ul=pTargetL->get(1).asInt();
-            vl=pTargetL->get(2).asInt();
+            objl=(pTargetL->get(0).asInt32()>0);
+            ul=pTargetL->get(1).asInt32();
+            vl=pTargetL->get(2).asInt32();
             handleControlState();
         }
 
         if (pTargetR!=nullptr)
         {
-            objr=(pTargetR->get(0).asInt()>0);
-            ur=pTargetR->get(1).asInt();
-            vr=pTargetR->get(2).asInt();
+            objr=(pTargetR->get(0).asInt32()>0);
+            ur=pTargetR->get(1).asInt32();
+            vr=pTargetR->get(2).asInt32();
             handleControlState();
         }
 
@@ -273,7 +273,7 @@ public:
     bool configure(ResourceFinder &rf) override
     {
         // retrieve command line options in the form of "--period 0.01"
-        double period=rf.check("period",Value(0.01)).asDouble();
+        double period=rf.check("period",Value(0.01)).asFloat64();
 
         // set the thread period in [s]
         thr.setPeriod(period);
