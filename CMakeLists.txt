@@ -30,6 +30,7 @@ add_library(${PROJECT_NAME}-world SHARED ${CMAKE_SOURCE_DIR}/src/world.cpp)
 target_compile_definitions(${PROJECT_NAME}-world PRIVATE _USE_MATH_DEFINES)
 target_include_directories(${PROJECT_NAME}-world PRIVATE ${GAZEBO_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME}-world PRIVATE ${GAZEBO_LIBRARIES} ${YARP_LIBRARIES})
+target_link_directories(${PROJECT_NAME}-world PRIVATE ${GAZEBO_LIBRARY_DIRS})
 install(TARGETS ${PROJECT_NAME}-world LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT shlib)
 
 # mover
